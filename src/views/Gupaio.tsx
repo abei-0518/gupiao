@@ -1,12 +1,13 @@
 import React, { Component } from 'react';
 import request from '../ulits/request';
+import { connect } from 'react-redux';
 
-export default class Gupaio extends Component {
+class Gupaio extends Component<any> {
     state = {
         data: [],
     };
     render() {
-        return <div>{this.state.data}</div>;
+        return <div>1</div>;
     }
     componentDidMount() {
         request
@@ -15,6 +16,19 @@ export default class Gupaio extends Component {
                 this.setState({
                     data: res.data.result.data,
                 });
+                this.props.Data(res.data.result.data);
             });
     }
 }
+export default connect(
+    state => {
+        return state;
+    },
+    dispatch => {
+        return {
+            Data(value: any) {
+                dispatch({ type: 'DATA', data: value });
+            },
+        };
+    }
+)(Gupaio);
